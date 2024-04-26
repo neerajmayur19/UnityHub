@@ -9,6 +9,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import path from "path"
 import AuthRoute from "./Routes/auth.js"
+import UserRoute from "./Routes/user.js"
 import { fileURLToPath } from "url"
 import {register} from "./Controllers/auth.js"
 
@@ -41,6 +42,7 @@ const upload = multer({storage});
 /*Authentication Routes*/
 app.post("/auth/register", upload.single("picture"), register);
 app.use("/auth",AuthRoute);
+app.use("/user",UserRoute);
 
 /*Database Connection*/
 const port = process.env.PORT || 9000
