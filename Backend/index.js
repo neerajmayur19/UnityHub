@@ -10,8 +10,11 @@ import dotenv from "dotenv"
 import path from "path"
 import AuthRoute from "./Routes/auth.js"
 import UserRoute from "./Routes/user.js"
+import PostRoute from "./Routes/posts.js"
 import { fileURLToPath } from "url"
 import {register} from "./Controllers/auth.js"
+import {createPost} from "./Controllers/posts.js"
+import {verified} from "./Middleware/auth.js"
 
 /*Configurations*/
 const __filename = fileURLToPath(import.meta.url);
@@ -41,8 +44,11 @@ const upload = multer({storage});
 
 /*Authentication Routes*/
 app.post("/auth/register", upload.single("picture"), register);
+app.post("/posts",verified,upload.single("picture"),createPost);
+
 app.use("/auth",AuthRoute);
 app.use("/user",UserRoute);
+app.use("/posts",PostRoute);
 
 /*Database Connection*/
 const port = process.env.PORT || 9000
